@@ -16,6 +16,10 @@ import retrofit2.http.Query
 
 
 
+
+
+
+
 const val  API_KEY = "c408e9a5abe51b86f172a50a3c03bce7"
 //http://api.weatherstack.com/current?access_key=c408e9a5abe51b86f172a50a3c03bce7&query=New%20York&lang=en
 //http://api.weatherstack.com/current?access_key=YOUR_ACCESS_KEY&query=New York&lang=en
@@ -29,6 +33,7 @@ interface ApixuWeatherApiService {
 
     companion object {
         operator  fun  invoke(): ApixuWeatherApiService {
+
             val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
                     .url
