@@ -7,10 +7,13 @@ import com.voyager.forcastmvvm.data.response.CurrentWeatherResponse
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+
+
 
 
 const val  API_KEY = "c408e9a5abe51b86f172a50a3c03bce7"
@@ -28,7 +31,7 @@ interface ApixuWeatherApiService {
         operator  fun  invoke(): ApixuWeatherApiService {
             val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
-                    .url()
+                    .url
                     .newBuilder()
                     .addQueryParameter("key", API_KEY)
                     .build()
@@ -41,11 +44,15 @@ interface ApixuWeatherApiService {
             val gson = GsonBuilder()
                 .setLenient()
                 .create()
-           /* val httpLoggingInterceptor = HttpLoggingInterceptor()
-            httpLoggingInterceptor.apply {
-                httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-            }*/
+            val logging = HttpLoggingInterceptor()
+            if (BuildConfig.DEBUG) {
+                logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+                logging.level.toString()
+                println("logging : " + logging.level.toString())
+                println("logging  BASE_URL : http://api.weatherstack.com/")
+            }
             val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(logging)
                 .addInterceptor(requestInterceptor)
                 .build()
             return Retrofit.Builder()
