@@ -9,7 +9,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.voyager.forcastmvvm.R
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class  MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
 

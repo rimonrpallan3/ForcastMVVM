@@ -1,6 +1,8 @@
 package com.voyager.forcastmvvm.data
 
+import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.voyager.forcastmvvm.BuildConfig
 import com.voyager.forcastmvvm.data.response.CurrentWeatherResponse
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
@@ -17,7 +19,7 @@ const val  API_KEY = "c408e9a5abe51b86f172a50a3c03bce7"
 
 interface ApixuWeatherApiService {
 
-  @GET("current")
+  @GET("current?access")
   fun getCurrentWeather(
       @Query("query") location: String,
       @Query("lang") languageCode: String): Deferred<CurrentWeatherResponse>
@@ -36,15 +38,21 @@ interface ApixuWeatherApiService {
                     .build()
                 return@Interceptor chain.proceed(request)
             }
-
+            val gson = GsonBuilder()
+                .setLenient()
+                .create()
+           /* val httpLoggingInterceptor = HttpLoggingInterceptor()
+            httpLoggingInterceptor.apply {
+                httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            }*/
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(requestInterceptor)
                 .build()
             return Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("api.weatherstack.com/current?access")
+                .baseUrl("http://api.weatherstack.com/")
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(ApixuWeatherApiService::class.java)
 
