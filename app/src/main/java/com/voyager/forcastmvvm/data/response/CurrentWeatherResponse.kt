@@ -1,9 +1,9 @@
 package com.voyager.forcastmvvm.data.response
 
 import com.google.gson.annotations.SerializedName
-import com.voyager.forcastmvvm.data.response.CurrentWeatherEntry
-import com.voyager.forcastmvvm.data.response.Location
-import com.voyager.forcastmvvm.data.response.Request
+import com.voyager.forcastmvvm.data.db.entry.CurrentWeatherEntry
+import com.voyager.forcastmvvm.data.db.entry.Location
+import com.voyager.forcastmvvm.data.db.entry.Request
 
 
 data class CurrentWeatherResponse(

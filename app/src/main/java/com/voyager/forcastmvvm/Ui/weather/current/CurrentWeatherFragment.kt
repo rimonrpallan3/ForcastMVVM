@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.voyager.forcastmvvm.R
+import com.voyager.forcastmvvm.data.API_KEY
 import com.voyager.forcastmvvm.data.ApixuWeatherApiService
 import com.voyager.forcastmvvm.data.response.CurrentWeatherResponse
 import kotlinx.android.synthetic.main.current_weather_fragment.*
@@ -37,7 +38,7 @@ class CurrentWeatherFragment : Fragment() {
 
         val  apiService = ApixuWeatherApiService()
         GlobalScope.launch(Dispatchers.Main){
-            val currentWeatherResponse = apiService.getCurrentWeather("New York","en").await()
+            val currentWeatherResponse = apiService.getCurrentWeather(API_KEY,"New York","en").await()
             tvCurrentWeather.text = currentWeatherResponse.currentWeatherEntry.toString()
         }
     }

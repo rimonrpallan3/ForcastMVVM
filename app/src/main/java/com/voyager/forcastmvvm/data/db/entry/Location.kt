@@ -1,4 +1,4 @@
-package com.voyager.forcastmvvm.data.response
+package com.voyager.forcastmvvm.data.db.entry
 
 
 import com.google.gson.annotations.SerializedName
